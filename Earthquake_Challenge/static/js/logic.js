@@ -16,19 +16,31 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 	accessToken: API_KEY
 });
 
+// We create the dark view tile layer that will be an option for our map.
+let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+	maxZoom: 18,
+	accessToken: API_KEY
+});
+
 // Create a base layer that holds both maps.
 let baseMaps = {
 	"Streets": streets,
-	"Satellite": satelliteStreets
+    "Satellite": satelliteStreets,
+    "Light": light
   };
 
 // Create the earthquake layer for our map.
 let earthquakes = new L.layerGroup();
 
+// Create the Tectonic Plates layer for our map.
+let TectonicPlates  = new L.layerGroup();
+
 // We define an object that contains the overlays.
 // This overlay will be visible all the time.
 let overlays = {
-    Earthquakes: earthquakes
+    "Tectonic Plates": TectonicPlates,
+   " Earthquakes": earthquakes
   };
 
 // Create the map object with center, zoom level and default layer.
@@ -88,6 +100,22 @@ function getRadius(magnitude) {
 // which layers are visible.
 L.control.layers(baseMaps, overlays).addTo(map);
 
+// Accessing the tectonic plate data
+let tectonicData = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
+//Create a style for the lines.
+let myStyle = {
+	color: "#048587",
+	weight: 2
+}
+
+d3.json(tectonicData).then(function (data) {
+    L.geoJSON(data, {
+      style: myStyle
+    }).addTo(TectonicPlates);
+//Then we add the Tectonic Plates layer to our map. 
+        TectonicPlates.addTo(map);
+
+
 // Retrieve the earthquake GeoJSON data.
 d3.json("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson").then(function(data) {
 
@@ -106,6 +134,8 @@ L.geoJson(data, {
     layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
   }
 }).addTo(earthquakes);
+
+
 //Then we add the earthquake layer to our map.
     earthquakes.addTo(map)
 
@@ -137,4 +167,5 @@ for (var i = 0; i < magnitudes.length; i++) {
 };
 
 legend.addTo(map);
+});
 });
