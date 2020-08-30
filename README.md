@@ -1,5 +1,5 @@
 # Mapping_Earthquakes
-![image]()
+![image](https://github.com/soijebor/Mapping_Earthquakes/blob/master/images/Mapping_Earthquakes_Challenge.png)
 ## ***Project Overview***
   * Create a branch from the master branch on GitHub.
   * Add, commit, and push data to a GitHub branch.
