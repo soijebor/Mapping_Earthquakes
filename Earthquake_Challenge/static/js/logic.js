@@ -16,8 +16,8 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 	accessToken: API_KEY
 });
 
-// We create the dark view tile layer that will be an option for our map.
-let light = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+// We create the blueprint view tile layer that will be an option for our map.
+let blueprint = L.tileLayer('https://api.mapbox.com/styles/v1/soijebor/ckegijxet01ei19pmefbex6cl/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 	maxZoom: 18,
 	accessToken: API_KEY
@@ -27,7 +27,7 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 let baseMaps = {
 	"Streets": streets,
     "Satellite": satelliteStreets,
-    "Light": light
+    "Blueprint" : blueprint
   };
 
 // Create the earthquake layer for our map.
@@ -104,7 +104,7 @@ L.control.layers(baseMaps, overlays).addTo(map);
 let tectonicData = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 //Create a style for the lines.
 let myStyle = {
-	color: "#048587",
+	color: "#8d021f",
 	weight: 2
 }
 
